@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+    <title>Analise Lexica | Compiladores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        div {
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            display: block;
+            margin: 0 auto;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div style="padding: 60px">
+        <h1 style="margin-bottom: 15px;">Analise Lexica | José Augusto Oliveira Sant'Ana</h1>
+        <p></p>
+        <form id="myForm" hx-post="/tokens" hx-ext="json-enc">
+            <select style="border-radius:5px;margin-bottom: 10px;border: 1px solid #ccc;" name="mode" id="mode">
+                <option value="json">Ver Json</option>
+                <option value="html">Ver Formatado</option>
+            </select>
+            <textarea name="code_text" id="code_text" rows="5" cols="40" maxlength="2500" placeholder="Escreva algum código:
+while (x<10) {
+    x = 10
+}"></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+    <div style="visibility: hidden;" id="result" hx-target="#result" hx-swap="outerHTML"></div>
+    <script src="https://unpkg.com/htmx.org@latest/dist/htmx.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+</body>
+
+</html>

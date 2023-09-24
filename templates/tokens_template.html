@@ -1,0 +1,7 @@
+{% for token in tokens %}
+<div id="result">
+    <h5><strong>Token</strong></h5>
+    <p><strong>Value: </strong> {{ token.value }}</p>
+    <p><strong>Lexeme: </strong><code>{{ token.lexeme }}</code></p>
+</div>
+{% endfor %}
