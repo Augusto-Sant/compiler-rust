@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug, Eq, PartialEq)]
 pub struct Token {
     value: String,
     lexeme: String,
@@ -38,6 +38,7 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
             ("i", "keyword_if"),
             ("f", "keyword_for"),
             ("w", "keyword_while"),
+            ("p", "keyword_print"),
             ("number", "numeric_literal"),
             ("(", "left_parenthesis"),
             (")", "right_parenthesis"),
@@ -70,6 +71,62 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
     );
 
     states.insert(
+        "keyword_print",
+        [
+            ("letter", "identifier"),
+            ("number", "identifier"),
+            ("r", "keyword_print_r"),
+        ]
+        .iter()
+        .cloned()
+        .collect(),
+    );
+
+    states.insert(
+        "keyword_print_r",
+        [
+            ("letter", "identifier"),
+            ("number", "identifier"),
+            ("i", "keyword_print_i"),
+        ]
+        .iter()
+        .cloned()
+        .collect(),
+    );
+
+    states.insert(
+        "keyword_print_i",
+        [
+            ("letter", "identifier"),
+            ("number", "identifier"),
+            ("n", "keyword_print_n"),
+        ]
+        .iter()
+        .cloned()
+        .collect(),
+    );
+
+    states.insert(
+        "keyword_print_n",
+        [
+            ("letter", "identifier"),
+            ("number", "identifier"),
+            ("t", "keyword_print_t"),
+        ]
+        .iter()
+        .cloned()
+        .collect(),
+    );
+
+    states.insert(
+        "keyword_print_t",
+        [("letter", "identifier"), ("number", "identifier")]
+            .iter()
+            .cloned()
+            .collect(),
+    );
+
+    states.insert(
         "keyword_if",
         [("letter", "identifier"), ("f", "keyword_if_follow")]
             .iter()
@@ -87,6 +144,18 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
 
     states.insert(
         "keyword_for",
+        [
+            ("letter", "identifier"),
+            ("o", "keyword_for_o"),
+            ("n", "function_keyword_n"),
+        ]
+        .iter()
+        .cloned()
+        .collect(),
+    );
+
+    states.insert(
+        "function_keyword_n",
         [("letter", "identifier"), ("o", "keyword_for_o")]
             .iter()
             .cloned()

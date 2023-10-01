@@ -18,7 +18,6 @@ struct TokenRequest {
 }
 
 async fn generate_token(Json(body): Json<TokenRequest>) -> impl IntoResponse {
-    // Process the token request here (e.g., generate a token)
     let start_time = Instant::now();
 
     let tokens = lexer::tokenize_code(body.code_text.as_str());
@@ -55,4 +54,57 @@ async fn main() {
         .serve(app.into_make_service())
         .await
         .unwrap();
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::lexer;
+
+    #[test]
+    fn test_tokenize_code() {
+        let code_text = r#"
+            fn program(){
+                while(x<=10){
+                    x = 10;
+                    print(x);
+                }
+                
+            }
+            "#;
+        let mut tokens_expected: Vec<lexer::Token> = Vec::new();
+        tokens_expected.push(lexer::Token::new("function_keyword_n", "fn", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("identifier", "program", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("left_parenthesis", "(", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("right_parenthesis", ")", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("left_curly_brace", "{", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("keyword_while_e", "while", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("left_parenthesis", "(", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("identifier", "x", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new(
+            "less_than_or_equal_operator",
+            "<=",
+            0,
+            0,
+            0,
+        ));
+        tokens_expected.push(lexer::Token::new("numeric_literal", "10", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("right_parenthesis", ")", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("left_curly_brace", "{", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("identifier", "x", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("assignment_operator", "=", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("numeric_literal", "10", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("semicolon", ";", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("keyword_print_t", "print", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("left_parenthesis", "(", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("identifier", "x", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("right_parenthesis", ")", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("semicolon", ";", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("right_curly_brace", "}", 0, 0, 0));
+        tokens_expected.push(lexer::Token::new("right_curly_brace", "}", 0, 0, 0));
+
+        let tokens_actual = lexer::tokenize_code(code_text);
+        for (expected, actual) in tokens_expected.iter().zip(tokens_actual.iter()) {
+            assert_eq!(expected, actual);
+        }
+    }
 }
