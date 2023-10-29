@@ -1,0 +1,21 @@
+<div class="tab-list" role="tablist">
+	<div hx-get="/tab1" class="selected" role="tab" aria-selected="false" aria-controls="tab-content">Analisador Léxico</div>
+	<div hx-get="/tab2" class="border-bottom" role="tab" aria-selected="false" aria-controls="tab-content">Analisador Sintático</div>
+	<div hx-get="/tab3" class="border-bottom" role="tab" aria-selected="false" aria-controls="tab-content">Tab 3</div>
+</div>
+<br>
+<br>
+<div id="tab-content" role="tabpanel" class="tab-content">
+    <form id="myForm" hx-post="/tokens" hx-ext="json-enc">
+        <select style="border-radius:5px;margin-bottom: 10px;border: 1px solid #ccc;" name="mode" id="mode">
+            <option value="html">Ver Formatado</option>
+            <option value="json">Ver Json</option>
+        </select>
+        <textarea name="code_text" id="code_text" rows="5" cols="40" maxlength="2500" placeholder="Escreva algum código:
+while (x<10) {
+   x = 10;
+}"></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+    <div style="visibility: hidden;" id="result" hx-target="#result" hx-swap="outerHTML"></div>
+</div>

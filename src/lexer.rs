@@ -144,18 +144,6 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
 
     states.insert(
         "keyword_for",
-        [
-            ("letter", "identifier"),
-            ("o", "keyword_for_o"),
-            ("n", "function_keyword_n"),
-        ]
-        .iter()
-        .cloned()
-        .collect(),
-    );
-
-    states.insert(
-        "function_keyword_n",
         [("letter", "identifier"), ("o", "keyword_for_o")]
             .iter()
             .cloned()
@@ -316,18 +304,11 @@ pub fn tokenize_code(code_text: &str) -> Vec<Token> {
                 }
             }
         }
-
-        // println!("Full Lexeme: {}",full_lexeme);
-
-        // println!("Symbol: {}, Current State: {}", symbol, current_state);
-
         if go_next {
             symbol_vec.remove(0);
         }
     }
     tokens.push(Token::new(current_state, full_lexeme.as_str(), 0, 0, 0));
-
     // println!("Result: {}", current_state);
-
     tokens
 }
