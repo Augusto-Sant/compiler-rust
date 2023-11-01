@@ -28,34 +28,37 @@ impl Token {
     }
 }
 
+/**
+ Makes the automaton for lexer, uppercase are final states
+*/
 fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> {
     let mut states: HashMap<&'static str, HashMap<&'static str, &'static str>> = HashMap::new();
 
     states.insert(
         "start",
         [
-            ("letter", "identifier"),
+            ("letter", "VARIABLE"),
             ("i", "keyword_if"),
             ("f", "keyword_for"),
             ("w", "keyword_while"),
             ("p", "keyword_print"),
-            ("number", "numeric_literal"),
-            ("(", "left_parenthesis"),
-            (")", "right_parenthesis"),
-            ("+", "plus_operator"),
-            ("[", "left_square_bracket"),
-            ("]", "right_square_bracket"),
-            ("{", "left_curly_brace"),
-            ("}", "right_curly_brace"),
-            ("*", "multiply_operator"),
-            ("/", "divide_operator"),
-            ("-", "subtract_operator"),
-            ("%", "modulus_operator"),
-            ("^", "exponent_operator"),
-            (">", "greater_than_operator"),
-            ("<", "less_than_operator"),
-            ("=", "assignment_operator"),
-            (";", "semicolon"),
+            ("number", "NUMBER"),
+            ("(", "LEFT_PARENTHESIS"),
+            (")", "RIGHT_PARENTHESIS"),
+            ("+", "PLUS"),
+            ("[", "LEFT_SQUARE_BRACKET"),
+            ("]", "RIGHT_SQUARE_BRACKET"),
+            ("{", "LEFT_CURLY_BRACE"),
+            ("}", "RIGHT_CURLY_BRACE"),
+            ("*", "MULTIPLY"),
+            ("/", "DIVIDE"),
+            ("-", "SUBTRACT"),
+            ("%", "MODULUS"),
+            ("^", "EXPONENT"),
+            (">", "GREATER_THAN"),
+            ("<", "LESS_THAN"),
+            ("=", "EQUAL"),
+            (";", "SEMICOLON"),
         ]
         .iter()
         .cloned()
@@ -63,8 +66,8 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
     );
 
     states.insert(
-        "identifier",
-        [("letter", "identifier"), ("number", "identifier")]
+        "VARIABLE",
+        [("letter", "VARIABLE"), ("number", "VARIABLE")]
             .iter()
             .cloned()
             .collect(),
@@ -73,8 +76,8 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
     states.insert(
         "keyword_print",
         [
-            ("letter", "identifier"),
-            ("number", "identifier"),
+            ("letter", "VARIABLE"),
+            ("number", "VARIABLE"),
             ("r", "keyword_print_r"),
         ]
         .iter()
@@ -85,8 +88,8 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
     states.insert(
         "keyword_print_r",
         [
-            ("letter", "identifier"),
-            ("number", "identifier"),
+            ("letter", "VARIABLE"),
+            ("number", "VARIABLE"),
             ("i", "keyword_print_i"),
         ]
         .iter()
@@ -97,8 +100,8 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
     states.insert(
         "keyword_print_i",
         [
-            ("letter", "identifier"),
-            ("number", "identifier"),
+            ("letter", "VARIABLE"),
+            ("number", "VARIABLE"),
             ("n", "keyword_print_n"),
         ]
         .iter()
@@ -109,9 +112,9 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
     states.insert(
         "keyword_print_n",
         [
-            ("letter", "identifier"),
-            ("number", "identifier"),
-            ("t", "keyword_print_t"),
+            ("letter", "VARIABLE"),
+            ("number", "VARIABLE"),
+            ("t", "PRINT"),
         ]
         .iter()
         .cloned()
@@ -119,8 +122,8 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
     );
 
     states.insert(
-        "keyword_print_t",
-        [("letter", "identifier"), ("number", "identifier")]
+        "PRINT",
+        [("letter", "VARIABLE"), ("number", "VARIABLE")]
             .iter()
             .cloned()
             .collect(),
@@ -128,15 +131,15 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
 
     states.insert(
         "keyword_if",
-        [("letter", "identifier"), ("f", "keyword_if_follow")]
+        [("letter", "VARIABLE"), ("f", "IF")]
             .iter()
             .cloned()
             .collect(),
     );
 
     states.insert(
-        "keyword_if_follow",
-        [("letter", "identifier"), ("number", "identifier")]
+        "IF",
+        [("letter", "VARIABLE"), ("number", "VARIABLE")]
             .iter()
             .cloned()
             .collect(),
@@ -144,7 +147,19 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
 
     states.insert(
         "keyword_for",
-        [("letter", "identifier"), ("o", "keyword_for_o")]
+        [
+            ("letter", "VARIABLE"),
+            ("o", "keyword_for_o"),
+            ("n", "FN_PROGRAM"),
+        ]
+        .iter()
+        .cloned()
+        .collect(),
+    );
+
+    states.insert(
+        "FN_PROGRAM",
+        [("letter", "VARIABLE"), ("number", "VARIABLE")]
             .iter()
             .cloned()
             .collect(),
@@ -152,15 +167,15 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
 
     states.insert(
         "keyword_for_o",
-        [("letter", "identifier"), ("r", "keyword_for_r")]
+        [("letter", "VARIABLE"), ("r", "FOR")]
             .iter()
             .cloned()
             .collect(),
     );
 
     states.insert(
-        "keyword_for_r",
-        [("letter", "identifier"), ("number", "identifier")]
+        "FOR",
+        [("letter", "VARIABLE"), ("number", "VARIABLE")]
             .iter()
             .cloned()
             .collect(),
@@ -168,7 +183,7 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
 
     states.insert(
         "keyword_while",
-        [("letter", "identifier"), ("h", "keyword_while_h")]
+        [("letter", "VARIABLE"), ("h", "keyword_while_h")]
             .iter()
             .cloned()
             .collect(),
@@ -176,7 +191,7 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
 
     states.insert(
         "keyword_while_h",
-        [("letter", "identifier"), ("i", "keyword_while_i")]
+        [("letter", "VARIABLE"), ("i", "keyword_while_i")]
             .iter()
             .cloned()
             .collect(),
@@ -184,7 +199,7 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
 
     states.insert(
         "keyword_while_i",
-        [("letter", "identifier"), ("l", "keyword_while_l")]
+        [("letter", "VARIABLE"), ("l", "keyword_while_l")]
             .iter()
             .cloned()
             .collect(),
@@ -192,55 +207,53 @@ fn setup_states() -> HashMap<&'static str, HashMap<&'static str, &'static str>> 
 
     states.insert(
         "keyword_while_l",
-        [("letter", "identifier"), ("e", "keyword_while_e")]
+        [("letter", "VARIABLE"), ("e", "WHILE")]
             .iter()
             .cloned()
             .collect(),
     );
 
     states.insert(
-        "keyword_while_e",
-        [("letter", "identifier"), ("number", "identifier")]
+        "WHILE",
+        [("letter", "VARIABLE"), ("number", "VARIABLE")]
             .iter()
             .cloned()
             .collect(),
     );
 
-    states.insert(
-        "numeric_literal",
-        [("number", "numeric_literal")].iter().cloned().collect(),
-    );
+    states.insert("NUMBER", [("number", "NUMBER")].iter().cloned().collect());
 
-    states.insert("right_parenthesis", HashMap::new());
-    states.insert("plus_operator", HashMap::new());
-    states.insert("left_parenthesis", HashMap::new());
-    states.insert("left_square_bracket", HashMap::new());
-    states.insert("right_square_bracket", HashMap::new());
-    states.insert("left_curly_brace", HashMap::new());
-    states.insert("right_curly_brace", HashMap::new());
-    states.insert("multiply_operator", HashMap::new());
-    states.insert("modulus_operator", HashMap::new());
-    states.insert("divide_operator", HashMap::new());
-    states.insert("exponent_operator", HashMap::new());
+    states.insert("RIGHT_PARENTHESIS", HashMap::new());
+    states.insert("PLUS", HashMap::new());
+    states.insert("LEFT_PARENTHESIS", HashMap::new());
+    states.insert("LEFT_SQUARE_BRACKET", HashMap::new());
+    states.insert("RIGHT_SQUARE_BRACKET", HashMap::new());
+    states.insert("LEFT_CURLY_BRACE", HashMap::new());
+    states.insert("RIGHT_CURLY_BRACE", HashMap::new());
+    states.insert("MULTIPLY", HashMap::new());
+    states.insert("MODULUS", HashMap::new());
+    states.insert("DIVIDE", HashMap::new());
+    states.insert("SUBTRACT", HashMap::new());
+    states.insert("EXPONENT", HashMap::new());
 
     let mut greater_than_operator = HashMap::new();
-    greater_than_operator.insert("=", "greater_than_or_equal_operator");
-    states.insert("greater_than_operator", greater_than_operator);
+    greater_than_operator.insert("=", "GREATER_THAN_OR_EQUAL");
+    states.insert("GREATER_THAN", greater_than_operator);
 
-    states.insert("greater_than_or_equal_operator", HashMap::new());
+    states.insert("GREATER_THAN_OR_EQUAL", HashMap::new());
 
     let mut less_than_operator = HashMap::new();
-    less_than_operator.insert("=", "less_than_or_equal_operator");
-    states.insert("less_than_operator", less_than_operator);
+    less_than_operator.insert("=", "LESS_THAN_OR_EQUAL");
+    states.insert("LESS_THAN", less_than_operator);
 
-    states.insert("less_than_or_equal_operator", HashMap::new());
+    states.insert("LESS_THAN_OR_EQUAL", HashMap::new());
 
     let mut assignment_operator = HashMap::new();
-    assignment_operator.insert("=", "equality_operator");
-    states.insert("assignment_operator", assignment_operator);
+    assignment_operator.insert("=", "EQUAL");
+    states.insert("EQUAL", assignment_operator);
 
-    states.insert("equality_operator", HashMap::new());
-    states.insert("semicolon", HashMap::new());
+    states.insert("EQUAL", HashMap::new());
+    states.insert("SEMICOLON", HashMap::new());
 
     states
 }
@@ -253,6 +266,9 @@ fn is_alphabetic_string(s: &str) -> bool {
     s.chars().all(|c| c.is_alphabetic())
 }
 
+/**
+ Lexer processes and returns Tokens of a given text
+*/
 pub fn tokenize_code(code_text: &str) -> Vec<Token> {
     let map = setup_states();
     let mut tokens: Vec<Token> = Vec::new();

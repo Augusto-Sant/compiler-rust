@@ -5,12 +5,14 @@ use axum::{
     routing::{get, post},
     Router,
 };
+use parser::syntax_parse;
 use serde::Deserialize;
 use std::net::SocketAddr;
 use std::time::Instant;
 use tera::{Context, Tera};
 
 mod lexer;
+mod parser;
 
 #[derive(Deserialize)]
 struct TokenRequest {
@@ -77,9 +79,31 @@ async fn main() {
 #[cfg(test)]
 mod tests {
     use crate::lexer::{tokenize_code, Token};
+    use crate::parser::syntax_parse;
     use std::fs::File;
     use std::io::Read;
     use std::path::Path;
+
+    #[test]
+    fn test_slr_parser() {
+        let file_path = Path::new("example_code.txt");
+        let mut file = match File::open(&file_path) {
+            Ok(file) => file,
+            Err(err) => panic!("Error opening file: {:?}", err),
+        };
+        let mut buffer = String::new();
+        match file.read_to_string(&mut buffer) {
+            Ok(_) => {
+                let code_text = buffer.to_string();
+                code_text
+            }
+            Err(err) => panic!("Error reading file: {:?}", err),
+        };
+        let code_text = buffer.as_str();
+
+        let tokens = tokenize_code(&code_text);
+        syntax_parse(tokens)
+    }
 
     #[test]
     fn test_tokenize_code() {
@@ -98,28 +122,28 @@ mod tests {
         };
         let code_text = buffer.as_str();
         let tokens_expected: Vec<Token> = vec![
-            Token::new("identifier", "program", 0, 0, 0),
-            Token::new("left_parenthesis", "(", 0, 0, 0),
-            Token::new("right_parenthesis", ")", 0, 0, 0),
-            Token::new("left_curly_brace", "{", 0, 0, 0),
-            Token::new("keyword_while_e", "while", 0, 0, 0),
-            Token::new("left_parenthesis", "(", 0, 0, 0),
-            Token::new("identifier", "x", 0, 0, 0),
-            Token::new("less_than_or_equal_operator", "<=", 0, 0, 0),
-            Token::new("numeric_literal", "10", 0, 0, 0),
-            Token::new("right_parenthesis", ")", 0, 0, 0),
-            Token::new("left_curly_brace", "{", 0, 0, 0),
-            Token::new("identifier", "x", 0, 0, 0),
-            Token::new("assignment_operator", "=", 0, 0, 0),
-            Token::new("numeric_literal", "10", 0, 0, 0),
-            Token::new("semicolon", ";", 0, 0, 0),
-            Token::new("keyword_print_t", "print", 0, 0, 0),
-            Token::new("left_parenthesis", "(", 0, 0, 0),
-            Token::new("identifier", "x", 0, 0, 0),
-            Token::new("right_parenthesis", ")", 0, 0, 0),
-            Token::new("semicolon", ";", 0, 0, 0),
-            Token::new("right_curly_brace", "}", 0, 0, 0),
-            Token::new("right_curly_brace", "}", 0, 0, 0),
+            Token::new("FN_PROGRAM", "fn", 0, 0, 0),
+            Token::new("LEFT_PARENTHESIS", "(", 0, 0, 0),
+            Token::new("RIGHT_PARENTHESIS", ")", 0, 0, 0),
+            Token::new("LEFT_CURLY_BRACE", "{", 0, 0, 0),
+            Token::new("WHILE", "while", 0, 0, 0),
+            Token::new("LEFT_PARENTHESIS", "(", 0, 0, 0),
+            Token::new("VARIABLE", "x", 0, 0, 0),
+            Token::new("LESS_THAN_OR_EQUAL", "<=", 0, 0, 0),
+            Token::new("NUMBER", "10", 0, 0, 0),
+            Token::new("RIGHT_PARENTHESIS", ")", 0, 0, 0),
+            Token::new("LEFT_CURLY_BRACE", "{", 0, 0, 0),
+            Token::new("VARIABLE", "x", 0, 0, 0),
+            Token::new("EQUAL", "=", 0, 0, 0),
+            Token::new("NUMBER", "10", 0, 0, 0),
+            Token::new("SEMICOLON", ";", 0, 0, 0),
+            Token::new("PRINT", "print", 0, 0, 0),
+            Token::new("LEFT_PARENTHESIS", "(", 0, 0, 0),
+            Token::new("VARIABLE", "x", 0, 0, 0),
+            Token::new("RIGHT_PARENTHESIS", ")", 0, 0, 0),
+            Token::new("SEMICOLON", ";", 0, 0, 0),
+            Token::new("RIGHT_CURLY_BRACE", "}", 0, 0, 0),
+            Token::new("RIGHT_CURLY_BRACE", "}", 0, 0, 0),
         ];
         let tokens_actual = tokenize_code(&code_text);
         for (expected, actual) in tokens_expected.iter().zip(tokens_actual.iter()) {

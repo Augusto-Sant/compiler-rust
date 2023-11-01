@@ -11,10 +11,11 @@
             <option value="html">Ver Formatado</option>
             <option value="json">Ver Json</option>
         </select>
-        <textarea name="code_text" id="code_text" rows="5" cols="40" maxlength="2500" placeholder="Escreva algum código:
-while (x<10) {
-   x = 10;
-}"></textarea>
+        <textarea name="code_text" id="code_text" rows="5" cols="40" maxlength="2500" >fn () {
+   while(x<=10){
+      x = 10-3;
+   }
+}</textarea>
         <button type="submit">Enviar</button>
     </form>
     <div style="visibility: hidden;" id="result" hx-target="#result" hx-swap="outerHTML"></div>
