@@ -1,10 +1,11 @@
+use crate::lexer::Token;
 use serde_json::{Error, Value};
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 
-fn untyped_example() -> Result<()> {
-    let file_path = Path::new("example_code.json");
+fn untyped_example() -> Result<(), Error> {
+    let file_path = Path::new("syntax_table.json");
     let mut file = match File::open(&file_path) {
         Ok(file) => file,
         Err(err) => panic!("Error opening file: {:?}", err),
@@ -17,12 +18,14 @@ fn untyped_example() -> Result<()> {
         }
         Err(err) => panic!("Error reading file: {:?}", err),
     };
-    let code_text = buffer.as_str();
+    let contents = buffer.as_str();
     // Parse the JSON data into serde_json::Value.
     let v: Value = serde_json::from_str(&contents)?;
 
     // Access parts of the data by indexing with square brackets.
-    println!("Please call {} at the number {}", v["name"], v["phones"][0]);
+    println!("{}", v["1"]["ACTION"]["b"]["d"]);
+    println!("{}", v["1"]);
+    println!("??");
 
     Ok(())
 }
