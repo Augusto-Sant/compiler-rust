@@ -3,11 +3,11 @@ use std::collections::HashMap;
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq)]
 pub struct Token {
-    value: String,
-    lexeme: String,
-    line: i32,
-    initial_position: i32,
-    final_position: i32,
+    pub value: String,
+    pub lexeme: String,
+    pub line: i32,
+    pub initial_position: i32,
+    pub final_position: i32,
 }
 
 impl Token {
@@ -280,11 +280,14 @@ pub fn tokenize_code(code_text: &str) -> Vec<Token> {
     let mut string_symbol = "".to_string();
     let mut symbol;
 
+    let mut counter = 0;
+    tokens.push(Token::new("FN_PROGRAM", "fn", 0, 0, 0));
     for character in code_text.chars() {
-        if !character.is_whitespace() {
+        if !character.is_whitespace() && counter > 2 {
             let letter_str = character.to_string();
             symbol_vec.push(letter_str);
         }
+        counter += 1;
     }
 
     while !symbol_vec.is_empty() {

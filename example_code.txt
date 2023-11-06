@@ -1,6 +1,6 @@
-fn(){
-    while(x<=10){
-        x = 10;
-        print(x);
-    }
+fn main(){
+    a = 10;
+    b = 11;
+    x = a+b;
+    print(x);
 }

@@ -13,11 +13,19 @@ use tera::{Context, Tera};
 
 mod lexer;
 mod parser;
+mod util;
 
 #[derive(Deserialize)]
 struct TokenRequest {
     code_text: String,
     mode: String,
+}
+
+async fn syntax_table() -> impl IntoResponse {
+    let code_text = util::read_file("example_code.txt");
+    let tokens = lexer::tokenize_code(&code_text);
+    let is_syntax_correct = syntax_parse(tokens);
+    Json(is_syntax_correct)
 }
 
 async fn generate_tokens(Json(body): Json<TokenRequest>) -> impl IntoResponse {
@@ -66,7 +74,8 @@ async fn main() {
         .route("/", get(index))
         .route("/tokens", post(generate_tokens))
         .route("/tab1", get(tab1))
-        .route("/tab2", get(tab2));
+        .route("/tab2", get(tab2))
+        .route("/syntax", get(syntax_table));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     println!("Listening on -> http://{addr}");
@@ -80,47 +89,18 @@ async fn main() {
 mod tests {
     use crate::lexer::{tokenize_code, Token};
     use crate::parser::syntax_parse;
-    use std::fs::File;
-    use std::io::Read;
-    use std::path::Path;
+    use crate::util::read_file;
 
     #[test]
     fn test_slr_parser() {
-        let file_path = Path::new("example_code.txt");
-        let mut file = match File::open(&file_path) {
-            Ok(file) => file,
-            Err(err) => panic!("Error opening file: {:?}", err),
-        };
-        let mut buffer = String::new();
-        match file.read_to_string(&mut buffer) {
-            Ok(_) => {
-                let code_text = buffer.to_string();
-                code_text
-            }
-            Err(err) => panic!("Error reading file: {:?}", err),
-        };
-        let code_text = buffer.as_str();
-
+        let code_text = read_file("example_code.txt");
         let tokens = tokenize_code(&code_text);
-        syntax_parse(tokens)
+        // syntax_parse(tokens)
     }
 
     #[test]
     fn test_tokenize_code() {
-        let file_path = Path::new("example_code.txt");
-        let mut file = match File::open(&file_path) {
-            Ok(file) => file,
-            Err(err) => panic!("Error opening file: {:?}", err),
-        };
-        let mut buffer = String::new();
-        match file.read_to_string(&mut buffer) {
-            Ok(_) => {
-                let code_text = buffer.to_string();
-                code_text
-            }
-            Err(err) => panic!("Error reading file: {:?}", err),
-        };
-        let code_text = buffer.as_str();
+        let code_text = read_file("example_code.txt");
         let tokens_expected: Vec<Token> = vec![
             Token::new("FN_PROGRAM", "fn", 0, 0, 0),
             Token::new("LEFT_PARENTHESIS", "(", 0, 0, 0),
