@@ -1,6 +1,4 @@
 fn main(){
-    a = 10;
-    b = 11;
-    x = a+b;
-    print(x);
+    x + y 
+    x = 10+323
 }

@@ -4,7 +4,7 @@ use std::thread;
 use std::time::Duration;
 
 fn read_json_file() -> Result<Value, Error> {
-    let file_path = "syntax_table.json";
+    let file_path = "tabela.json";
     let file_contents = std::fs::read_to_string(file_path).expect("Error reading file");
     let json_value: serde_json::Value =
         serde_json::from_str(&file_contents).expect("Error parsing JSON");
@@ -28,79 +28,54 @@ pub fn syntax_parse(tokens: Vec<Token>) -> bool {
     println!("- iniciou com estado 0");
 
     let mut i = 0;
-    const NON_TERMINALS: [&str; 16] = [
-        "<PROGRAM>",
-        "<VAR_LIST>",
-        "<COMMAND_LIST>",
-        "<VAR>",
-        "<TYPE>",
-        "<COMMAND>",
-        "<PRINT>",
-        "<ASSIGN>",
-        "<EXP>",
-        "<EXP1>",
-        "<EXP2>",
-        "<EXP3>",
-        "<IF>",
-        "<EXP_LOG>",
-        "<EXP_LOG_2>",
-        "<LOGICAL_OP>",
-    ];
+    const NON_TERMINALS: [&str; 3] = ["EXP", "EXP2", "EXP3"];
 
     while i < tokens.len() {
-        println!("qtd tokens -> {}", tokens.len());
-        println!("| Token: {}", tokens[i].value);
-        if let Some(action) = afd[pilha.last().unwrap()]["ACTION"].get(&tokens[i].value) {
+        let token_count = tokens.len();
+        let token_value = &tokens[i].value;
+
+        println!(" - Token: {}", token_value);
+
+        if let Some(action) = afd[pilha.last().unwrap()]["ACTION"].get(token_value) {
             let move_parts: Vec<&str> = action.as_str().unwrap().split(' ').collect();
-            println!(" | Ação -> {}", action);
+            println!(" - Action: {}", action);
 
             match move_parts[0] {
                 "S" => {
-                    //  Shift - Empilha e avança o ponteiro
-                    println!("SHIFT");
+                    // Shift - Push and advance the pointer
+                    println!("  -- Shift operation");
                     let shift_value = move_parts[1];
                     pilha.push(shift_value);
                     i += 1;
                 }
                 "R" => {
-                    // Reduce - Desempilha e Desvia (para indicar a redução)
-                    println!("REDUCE");
+                    // Reduce - Pop and Redirect (to indicate reduction)
+                    println!("  -- Reduce operation");
                     let reduce_count = move_parts[1].parse::<usize>().unwrap();
-                    for _ in 0..reduce_count {
-                        pilha.pop();
-                    }
-                    if &tokens[i].value == "SEMICOLON" {
-                        pilha.push("14");
-                        i += 1;
-                    }
-                    // println!(
-                    //     "reduced pilha -> {:?} {:?}",
-                    //     pilha,
-                    //     NON_TERMINALS[move_parts[1].parse::<usize>().unwrap()]
-                    // );
-                    // let desvio = afd[pilha.last().unwrap()]["GOTO"]
-                    //     [NON_TERMINALS[move_parts[1].parse::<usize>().unwrap()]][&tokens[i].value]
-                    //     .as_str()
-                    //     .unwrap();
-                    //
-                    // pilha.push(desvio);
+                    let non_terminal_index = move_parts[2].parse::<usize>().unwrap();
+                    pilha.truncate(pilha.len() - reduce_count);
+
+                    let goto_value = &afd[pilha.last().unwrap()]["GOTO"]
+                        [NON_TERMINALS[non_terminal_index]][token_value];
+                    let desvio = goto_value.as_str().unwrap();
+
+                    pilha.push(desvio);
                 }
                 "ACC" => {
-                    println!("Ok");
+                    println!("- \x1b[32mOk\x1b[0m Accept operation: Parsing successful");
                     return true;
                 }
                 _ => {
-                    println!("Erro");
+                    println!("- Error: Invalid action");
                     return false;
                 }
             }
 
-            println!("pilha -> {:?}", pilha)
+            println!("- Current stack: {:?}", pilha);
+            println!(" ")
         } else {
             return false;
         }
-        time_sleep(5);
     }
-
     false
 }

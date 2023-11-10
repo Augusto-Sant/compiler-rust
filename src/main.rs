@@ -24,7 +24,10 @@ struct TokenRequest {
 async fn syntax_table() -> impl IntoResponse {
     let code_text = util::read_file("example_code.txt");
     let tokens = lexer::tokenize_code(&code_text);
-    let is_syntax_correct = syntax_parse(tokens);
+    println!(" INFO: analysing {} tokens", tokens.len());
+    let mut sliced_tokens: Vec<lexer::Token> = tokens[5..tokens.len() - 1].to_vec();
+    sliced_tokens.push(lexer::Token::new("$", "$", 0, 0, 0));
+    let is_syntax_correct = syntax_parse(sliced_tokens);
     Json(is_syntax_correct)
 }
 
