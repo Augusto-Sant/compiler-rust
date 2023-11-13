@@ -5,7 +5,6 @@ use axum::{
     routing::{get, post},
     Router,
 };
-use parser::syntax_parse;
 use serde::Deserialize;
 use std::net::SocketAddr;
 use std::time::Instant;
@@ -21,14 +20,24 @@ struct TokenRequest {
     mode: String,
 }
 
-async fn syntax_table() -> impl IntoResponse {
-    let code_text = util::read_file("example_code.txt");
-    let tokens = lexer::tokenize_code(&code_text);
-    println!(" INFO: analysing {} tokens", tokens.len());
-    let mut sliced_tokens: Vec<lexer::Token> = tokens[5..tokens.len() - 1].to_vec();
-    sliced_tokens.push(lexer::Token::new("$", "$", 0, 0, 0));
-    let is_syntax_correct = syntax_parse(sliced_tokens);
-    Json(is_syntax_correct)
+async fn check_syntax(Json(body): Json<TokenRequest>) -> impl IntoResponse {
+    let start_time = Instant::now();
+    let mut tokens = lexer::tokenize_code(body.code_text.as_str());
+    tokens.insert(1, lexer::Token::new("MAIN_PROGRAM", "MAIN", 0, 0, 0));
+    tokens.push(lexer::Token::new("$", "$", 0, 0, 0));
+    let tokens_processed = tokens.len();
+    let is_syntax_correct = parser::syntax_parse(tokens);
+    let end_time = Instant::now();
+    let elapsed_time = (end_time - start_time).as_secs_f64() * 1000.0;
+    println!(
+        " INFO: processed and analysed syntax in tokens -> {tokens_processed} in {elapsed_time} ms"
+    );
+
+    let tera = Tera::new("templates/**/*").unwrap();
+    let mut context = tera::Context::new();
+    context.insert("is_syntax_correct", &is_syntax_correct);
+    let rendered = tera.render("syntax_template.html", &context).unwrap();
+    rendered.into_response()
 }
 
 async fn generate_tokens(Json(body): Json<TokenRequest>) -> impl IntoResponse {
@@ -64,6 +73,7 @@ async fn tab1() -> impl IntoResponse {
     let rendered = tera.render("tab1.html", &context).unwrap();
     Response::new(rendered)
 }
+
 async fn tab2() -> impl IntoResponse {
     let tera = Tera::new("templates/**/*").unwrap();
     let context = Context::new();
@@ -78,7 +88,7 @@ async fn main() {
         .route("/tokens", post(generate_tokens))
         .route("/tab1", get(tab1))
         .route("/tab2", get(tab2))
-        .route("/syntax", get(syntax_table));
+        .route("/syntax", post(check_syntax));
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     println!("Listening on -> http://{addr}");

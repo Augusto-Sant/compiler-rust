@@ -280,14 +280,11 @@ pub fn tokenize_code(code_text: &str) -> Vec<Token> {
     let mut string_symbol = "".to_string();
     let mut symbol;
 
-    let mut counter = 0;
-    tokens.push(Token::new("FN_PROGRAM", "fn", 0, 0, 0));
     for character in code_text.chars() {
-        if !character.is_whitespace() && counter > 2 {
+        if !character.is_whitespace() {
             let letter_str = character.to_string();
             symbol_vec.push(letter_str);
         }
-        counter += 1;
     }
 
     while !symbol_vec.is_empty() {

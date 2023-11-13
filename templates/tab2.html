@@ -6,5 +6,16 @@
 <br>
 <br>
 <div id="tab-content" role="tabpanel" class="tab-content">
-Tab 2 :)
+    <form id="myForm" hx-post="/syntax" hx-ext="json-enc">
+        <select style="display: none;" name="mode" id="mode">
+            <option value="html">Ver Formatado</option>
+        </select>
+        <textarea name="code_text" id="code_text" rows="5" cols="40" maxlength="2500" >fn () {
+   if (x<=10){
+      x = 10+32;
+   };
+}</textarea>
+        <button type="submit">Enviar</button>
+    </form>
+    <div style="visibility: hidden;" id="result" hx-target="#result" hx-swap="outerHTML"></div>
 </div>

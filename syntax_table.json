@@ -1,760 +1,653 @@
 {
   "0":{
-    "GOTO":{
-      "<PROGRAM>":"1"
-    },
     "ACTION":{
       "FN_PROGRAM":"S 2"
+    },
+    "GOTO":{
+     "program-nt":{
+        "$":1 
+      } 
     }
   },
   "1":{
+    "ACTION":{
+      "$":"ACC"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "$":"ACCEPT"
     }
   },
   "2":{
+    "ACTION":{
+      "MAIN_PROGRAM":"S 3"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"S 3"
     }
   },
   "3":{
-    "GOTO":{
-      
-    },
     "ACTION":{
       "LEFT_PARENTHESIS":"S 4"
+    },
+    "GOTO":{
+      
     }
   },
   "4":{
-    "GOTO":{
-      "<VAR_LIST>":"5",
-      "<VAR>":"6",
-      "<TYPE>":"7"
-    },
     "ACTION":{
-      "INTEGER":"S 10",
-      "STRING":"S 8",
-      "CHAR":"S 9",
-      "RIGHT_PARENTHESIS":"S 11"
+      "RIGHT_PARENTHESIS":"S 5"
+    },
+    "GOTO":{
+      
     }
   },
   "5":{
+    "ACTION":{
+      "LEFT_CURLY_BRACE":"S 6"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "RIGHT_PARENTHESIS":"S 11"
     }
   },
   "6":{
-    "GOTO":{
-      
-    },
     "ACTION":{
-      "COMMA":"S 12"
+      "RIGHT_CURLY_BRACE":"R 3 program-nt",
+      "PRINT":"S 14",
+      "VARIABLE":"S 17",
+      "IF":"S 15",
+      "WHILE":"S 16"
+    },
+    "GOTO":{
+      "program-nt": 1,
+      "command-list-nt": {"RIGHT_CURLY_BRACE":7},
+      "command-nt": {"SEMICOLON":8},
+      "assign-nt": {
+        "SEMICOLON": 9
+      },
+      "print-nt": 10,
+      "if-nt": {"ANY":11},
+      "while-nt": 12,
+      "variable-nt": {
+        "ANY":13
+      }
     }
   },
   "7":{
+    "ACTION":{
+      "RIGHT_CURLY_BRACE":"S 18"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"S 13"
     }
   },
   "8":{
+    "ACTION":{
+      "SEMICOLON":"S 19"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"R 4"
     }
   },
   "9":{
-    "GOTO":{
-      
-    },
     "ACTION":{
-      "VARIABLE":"R 5"
+      "SEMICOLON":"R 1 command-nt"
+    },
+    "GOTO":{
+       
     }
   },
   "10":{
+    "ACTION":{
+      "SEMICOLON":"R 5"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"R 6"
     }
   },
   "11":{
+    "ACTION":{
+      "SEMICOLON":"R 1 command-nt"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "LEFT_CURLY_BRACE":"S 14"
     }
   },
   "12":{
-    "GOTO":{
-      "<VAR_LIST>":"15",
-      "<VAR>":"6",
-      "<TYPE>":"7"
-    },
     "ACTION":{
-      "INTEGER":"S 10",
-      "STRING":"S 8",
-      "CHAR":"S 9",
-      "RIGHT_PARENTHESIS":"R 2"
+      "SEMICOLON":"R 7"
+    },
+    "GOTO":{
+      
     }
   },
   "13":{
+    "ACTION":{
+      "EQUAL": "S 20"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "SEMICOLON":"R 3",
-      "COMMA":"R 3"
     }
   },
   "14":{
-    "GOTO":{
-      "<COMMAND_LIST>":"16",
-      "<VAR>":"19",
-      "<TYPE>":"7",
-      "<COMMAND>":"17",
-      "<PRINT>":"18",
-      "<ASSIGN>":"21",
-      "<IF>":"20"
-    },
     "ACTION":{
-      "IF":"S 23",
-      "PRINT":"S 22",
-      "INTEGER":"S 10",
-      "STRING":"S 8",
-      "CHAR":"S 9",
-      "VARIABLE":"S 24",
-      "RIGHT_CURLY_BRACE":"R 8"
+      "LEFT_PARENTHESIS":"S 21"
+    },
+    "GOTO":{
+      
     }
   },
   "15":{
+    "ACTION":{
+      "LEFT_PARENTHESIS":"S 22"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "RIGHT_PARENTHESIS":"R 1"
     }
   },
   "16":{
+    "ACTION":{
+      "LEFT_PARENTHESIS":"S 23"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "RIGHT_CURLY_BRACE":"S 25"
     }
   },
   "17":{
-    "GOTO":{
-      
-    },
     "ACTION":{
-      "SEMICOLON":"S 26"
+      "ANY": "R 1 variable-nt"
+    },
+    "GOTO":{
     }
   },
   "18":{
+    "ACTION":{
+      "$":"R 7 program-nt"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "SEMICOLON":"R 9"
     }
   },
   "19":{
-    "GOTO":{
-      
-    },
     "ACTION":{
-      "SEMICOLON":"R 10"
+      "RIGHT_CURLY_BRACE":"R 0 command-list-nt",
+      "PRINT":"S 14",
+      "VARIABLE":"S 17",
+      "IF":"S 15",
+      "WHILE":"S 16"
+    },
+    "GOTO":{
+      "command-list-nt":{
+        "RIGHT_CURLY_BRACE":24
+      }
     }
   },
   "20":{
-    "GOTO":{
-      
-    },
     "ACTION":{
-      "SEMICOLON":"R 11"
+      "VARIABLE":"S 17",
+      "NUMBER":"S 28"
+    },
+    "GOTO":{
+      "exp2-nt": {
+        "ANY":26
+      },
+      "exp-nt": {
+        "SEMICOLON": 25
+      }
     }
   },
   "21":{
+    "ACTION":{
+      "VARIABLE":"S 29"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "SEMICOLON":"R 12"
     }
   },
   "22":{
-    "GOTO":{
-      
-    },
     "ACTION":{
-      "LEFT_PARENTHESIS":"S 27"
+      "VARIABLE":"S 17",
+      "NUMBER":"S 28"
+    },
+    "GOTO":{
+      "variable-nt": {
+        "ANY": 27
+      },
+      "exp2-nt": {
+        "ANY": 26
+      },
+      "exp-nt": {
+        "GREATER_THAN_OR_EQUAL":31,
+        "ANY":31
+      },
+      "exp-log-nt": {
+        "RIGHT_PARENTHESIS": 30,
+        "ANY": 30
+      }
     }
   },
   "23":{
+    "ACTION":{
+      "VARIABLE":"S 17",
+      "NUMBER":"S 28"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "LEFT_PARENTHESIS":"S 28"
     }
   },
   "24":{
-    "GOTO":{
-      
-    },
     "ACTION":{
-      "EQUAL":"S 29"
+      "RIGHT_CURLY_BRACE":"R 3 command-list-nt"
+    },
+    "GOTO":{
+
     }
   },
   "25":{
+    "ACTION":{
+      "SEMICOLON":"R 3 assign-nt"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "$":"R 0"
     }
   },
   "26":{
-    "GOTO":{
-      "<COMMAND_LIST>":"30",
-      "<VAR>":"19",
-      "<TYPE>":"7",
-      "<COMMAND>":"17",
-      "<PRINT>":"18",
-      "<ASSIGN>":"21",
-      "<IF>":"20"
-    },
     "ACTION":{
-      "IF":"S 23",
-      "PRINT":"S 22",
-      "INTEGER":"S 10",
-      "STRING":"S 8",
-      "CHAR":"S 9",
-      "VARIABLE":"S 24",
-      "RIGHT_CURLY_BRACE":"R 8"
+      "RIGHT_PARENTHESIS":"R 0 exp1-nt",
+      "SEMICOLON":"R 0 exp1-nt",
+      "EQUAL":"R 0 exp1-nt",
+      "PLUS":"S 35",
+      "SUBTRACT":"S 36",
+      "MULTIPLY":"S 37",
+      "DIVIDE":"S 38",
+      "EQUAL_EQUAL":"R 0 exp1-nt",
+      "GREATER_THAN":"R 0 exp1-nt",
+      "LESS_THAN":"R 0 exp1-nt",
+      "LESS_THAN_OR_EQUAL":"R 0 exp1-nt",
+      "GREATER_THAN_OR_EQUAL":"R 0 exp1-nt"
+    },
+    "GOTO":{
+      "exp1-nt":{
+        "SEMICOLON":33,
+        "ANY": 33
+      }, 
+      "operator-nt": {
+        "ANY": 34
+      }
     }
   },
   "27":{
+    "ACTION":{
+      "RIGHT_PARENTHESIS":"R 1 exp2-nt",
+      "SEMICOLON":"R 1 exp2-nt",
+      "EQUAL":"R 1 exp2-ntp",
+      "PLUS":"R 1 exp2-nt",
+      "SUBTRACT":"R 1 exp2-nt",
+      "MULTIPLY":"R 1 exp2-nt",
+      "DIVIDE":"R 1 exp2-nt",
+      "EQUAL_EQUAL":"R 1 exp2-nt",
+      "GREATER_THAN":"R 1 exp2-nt",
+      "LESS_THAN":"R 1 exp2-nt",
+      "LESS_THAN_OR_EQUAL":"R 1 exp2-nt",
+      "GREATER_THAN_OR_EQUAL":"R 1 exp2-nt"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"S 31"
     }
   },
   "28":{
-    "GOTO":{
-      "<EXP>":"33",
-      "<EXP2>":"34",
-      "<EXP3>":"36",
-      "<EXP_LOG>":"32"
-    },
     "ACTION":{
-      "VARIABLE":"S 37",
-      "NUMBER":"S 38",
-      "PLUS":"R 20",
-      "MULTIPLY":"S 35",
-      "EQUAL_EQUAL":"R 20",
-      "LESS_THAN":"R 20",
-      "GREATER_THAN":"R 20",
-      "LESS_OR_EQUAL_THAN":"R 20",
-      "GREATER_OR_EQUAL_THAN":"R 20",
-      "SEMICOLON":"R 20",
-      "LEFT_PARENTHESIS":"S 39",
-      "RIGHT_PARENTHESIS":"R 20"
+      "RIGHT_PARENTHESIS":"R 1 exp2-nt",
+      "SEMICOLON":"R 1 exp2-nt",
+      "EQUAL":"R 1 exp2-nt",
+      "PLUS":"R 1 exp2-nt",
+      "SUBTRACT":"R 1 exp2-nt",
+      "MULTIPLY":"R 1 exp2-nt",
+      "DIVIDE":"R 1 exp2-nt",
+      "EQUAL_EQUAL":"R 3 exp2-nt",
+      "GREATER_THAN":"R 3 exp2-nt"
+    },
+    "GOTO":{
+       
     }
   },
   "29":{
-    "GOTO":{
-      "<EXP>":"40",
-      "<EXP2>":"34",
-      "<EXP3>":"36"
-    },
     "ACTION":{
-      "VARIABLE":"S 37",
-      "NUMBER":"S 38",
-      "PLUS":"R 20",
-      "MULTIPLY":"S 35",
-      "EQUAL_EQUAL":"R 20",
-      "LESS_THAN":"R 20",
-      "GREATER_THAN":"R 20",
-      "LESS_OR_EQUAL_THAN":"R 20",
-      "GREATER_OR_EQUAL_THAN":"R 20",
-      "SEMICOLON":"R 20",
-      "LEFT_PARENTHESIS":"S 39",
-      "RIGHT_PARENTHESIS":"R 20"
+      "RIGHT_PARENTHESIS":"S 39"
+    },
+    "GOTO":{
+      
     }
   },
   "30":{
+    "ACTION":{
+      "RIGHT_PARENTHESIS":"S 40"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "RIGHT_CURLY_BRACE":"R 7"
     }
   },
   "31":{
-    "GOTO":{
-      
-    },
     "ACTION":{
-      "RIGHT_PARENTHESIS":"S 41"
+      "RIGHT_PARENTHESIS":"R 19",
+      "EQUAL":"S 43",
+      "EQUAL_EQUAL":"S 44",
+      "GREATER_THAN":"S 46",
+      "LESS_THAN":"S 46",
+      "GREATER_THAN_OR_EQUAL":"S 46",
+      "LESS_THAN_OR_EQUAL":"S 46"
+    },
+    "GOTO":{
+      "logical-op-nt": {
+        "NUMBER": 42,
+        "ANY":42
+      },
+      "exp-log2-nt": {
+        "RIGHT_PARENTHESIS": 41,
+        "ANY": 41
+      }
     }
   },
   "32":{
+    "ACTION":{
+      "RIGHT_PARENTHESIS":"S 46"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "RIGHT_PARENTHESIS":"S 42"
     }
   },
   "33":{
-    "GOTO":{
-      "<EXP_LOG_2>":"43",
-      "<LOGICAL_OP>":"44"
-    },
     "ACTION":{
-      "EQUAL_EQUAL":"S 45",
-      "LESS_THAN":"S 46",
-      "GREATER_THAN":"S 47",
-      "LESS_OR_EQUAL_THAN":"S 48",
-      "GREATER_OR_EQUAL_THAN":"S 49",
-      "RIGHT_PARENTHESIS":"R 27"
+      "RIGHT_PARENTHESIS":"R 2 exp-nt",
+      "SEMICOLON":"R 2 exp-nt",
+      "EQUAL":"R 2 exp-nt",
+      "EQUAL_EQUAL":"R 2 exp-nt",
+      "GREATER_THAN":"R 2 exp-nt",
+      "LESS_THAN":"R 2 exp-nt",
+      "LESS_THAN_OR_EQUAL":"R 2 exp-nt",
+      "GREATER_THAN_OR_EQUAL":"R 2 exp-nt"
+    },
+    "GOTO":{
+      
     }
   },
   "34":{
-    "GOTO":{
-      "<EXP1>":"50",
-      "<EXP2>":"52",
-      "<EXP3>":"36"
-    },
     "ACTION":{
-      "VARIABLE":"S 37",
-      "NUMBER":"S 38",
-      "PLUS":"S 51",
-      "MULTIPLY":"S 35",
-      "EQUAL_EQUAL":"R 20",
-      "LESS_THAN":"R 20",
-      "GREATER_THAN":"R 20",
-      "LESS_OR_EQUAL_THAN":"R 20",
-      "GREATER_OR_EQUAL_THAN":"R 20",
-      "SEMICOLON":"R 20",
-      "LEFT_PARENTHESIS":"S 39",
-      "RIGHT_PARENTHESIS":"R 20"
+      "VARIABLE":"S 17",
+      "NUMBER":"S 28"
+    },
+    "GOTO":{
+      "exp2-nt": {
+        "SEMICOLON":49
+      } 
     }
   },
   "35":{
-    "GOTO":{
-      "<EXP3>":"53"
-    },
     "ACTION":{
-      "VARIABLE":"S 37",
-      "NUMBER":"S 38",
-      "LEFT_PARENTHESIS":"S 39"
+      "VARIABLE":"R 1 operator-nt",
+      "NUMBER":"R 1 operator-nt"
+    },
+    "GOTO":{
+      
     }
   },
   "36":{
+    "ACTION":{
+      "VARIABLE":"R 1 operator-nt",
+      "NUMBER":"R 1 operator-nt"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"R 19",
-      "NUMBER":"R 19",
-      "PLUS":"R 19",
-      "MULTIPLY":"R 19",
-      "EQUAL_EQUAL":"R 19",
-      "LESS_THAN":"R 19",
-      "GREATER_THAN":"R 19",
-      "LESS_OR_EQUAL_THAN":"R 19",
-      "GREATER_OR_EQUAL_THAN":"R 19",
-      "SEMICOLON":"R 19",
-      "LEFT_PARENTHESIS":"R 19",
-      "RIGHT_PARENTHESIS":"R 19"
     }
   },
   "37":{
+    "ACTION":{
+      "VARIABLE":"R 1 operator-nt",
+      "NUMBER":"R 1 operator-nt"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"R 21",
-      "NUMBER":"R 21",
-      "PLUS":"R 21",
-      "MULTIPLY":"R 21",
-      "EQUAL_EQUAL":"R 21",
-      "LESS_THAN":"R 21",
-      "GREATER_THAN":"R 21",
-      "LESS_OR_EQUAL_THAN":"R 21",
-      "GREATER_OR_EQUAL_THAN":"R 21",
-      "SEMICOLON":"R 21",
-      "LEFT_PARENTHESIS":"R 21",
-      "RIGHT_PARENTHESIS":"R 21"
     }
   },
   "38":{
+    "ACTION":{
+      "VARIABLE":"R 1 operator-nt",
+      "NUMBER":"R 1 operator-nt"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"R 22",
-      "NUMBER":"R 22",
-      "PLUS":"R 22",
-      "MULTIPLY":"R 22",
-      "EQUAL_EQUAL":"R 22",
-      "LESS_THAN":"R 22",
-      "GREATER_THAN":"R 22",
-      "LESS_OR_EQUAL_THAN":"R 22",
-      "GREATER_OR_EQUAL_THAN":"R 22",
-      "SEMICOLON":"R 22",
-      "LEFT_PARENTHESIS":"R 22",
-      "RIGHT_PARENTHESIS":"R 22"
     }
   },
   "39":{
-    "GOTO":{
-      "<EXP>":"54",
-      "<EXP2>":"34",
-      "<EXP3>":"36"
-    },
     "ACTION":{
-      "VARIABLE":"S 37",
-      "NUMBER":"S 38",
-      "PLUS":"R 20",
-      "MULTIPLY":"S 35",
-      "EQUAL_EQUAL":"R 20",
-      "LESS_THAN":"R 20",
-      "GREATER_THAN":"R 20",
-      "LESS_OR_EQUAL_THAN":"R 20",
-      "GREATER_OR_EQUAL_THAN":"R 20",
-      "SEMICOLON":"R 20",
-      "LEFT_PARENTHESIS":"S 39",
-      "RIGHT_PARENTHESIS":"R 20"
+      "SEMICOLON":"R 9"
+    },
+    "GOTO":{
+      
     }
   },
   "40":{
+    "ACTION":{
+      "LEFT_CURLY_BRACE":"S 50"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "SEMICOLON":"R 14"
     }
   },
   "41":{
+    "ACTION":{
+      "RIGHT_PARENTHESIS":"R 2 exp-log-nt"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "SEMICOLON":"R 13"
     }
   },
   "42":{
-    "GOTO":{
-      
-    },
     "ACTION":{
-      "LEFT_CURLY_BRACE":"S 55"
+      "VARIABLE":"S 17",
+      "NUMBER":"S 28"
+    },
+    "GOTO":{
+      "exp2-nt":{
+        "RIGHT_PARENTHESIS": 26,
+        "ANY": 26
+      },
+      "exp-nt":{
+        "RIGHT_PARENTHESIS":51,
+        "ANY":51
+      }
     }
   },
   "43":{
+    "ACTION":{
+      "EQUAL":"S 50"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "RIGHT_PARENTHESIS":"R 25"
     }
   },
   "44":{
-    "GOTO":{
-      "<EXP>":"56",
-      "<EXP2>":"34",
-      "<EXP3>":"36"
-    },
     "ACTION":{
-      "VARIABLE":"S 37",
-      "NUMBER":"S 38",
-      "PLUS":"R 20",
-      "MULTIPLY":"S 35",
-      "EQUAL_EQUAL":"R 20",
-      "LESS_THAN":"R 20",
-      "GREATER_THAN":"R 20",
-      "LESS_OR_EQUAL_THAN":"R 20",
-      "GREATER_OR_EQUAL_THAN":"R 20",
-      "SEMICOLON":"R 20",
-      "LEFT_PARENTHESIS":"S 39",
-      "RIGHT_PARENTHESIS":"R 20"
+      "EQUAL":"S 51",
+      "VARIABLE":"R 25",
+      "NUMBER":"R 25"
+    },
+    "GOTO":{
+      
     }
   },
   "45":{
+    "ACTION":{
+      "EQUAL":"S 52",
+      "VARIABLE":"R 26",
+      "NUMBER":"R 26"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"R 28",
-      "NUMBER":"R 28",
-      "PLUS":"R 28",
-      "MULTIPLY":"R 28",
-      "EQUAL_EQUAL":"R 28",
-      "LESS_THAN":"R 28",
-      "GREATER_THAN":"R 28",
-      "LESS_OR_EQUAL_THAN":"R 28",
-      "GREATER_OR_EQUAL_THAN":"R 28",
-      "LEFT_PARENTHESIS":"R 28",
-      "RIGHT_PARENTHESIS":"R 28"
     }
   },
   "46":{
+    "ACTION":{
+      "LEFT_CURLY_BRACE":"S 53",
+      "NUMBER": "R 1 logical-op-nt"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"R 29",
-      "NUMBER":"R 29",
-      "PLUS":"R 29",
-      "MULTIPLY":"R 29",
-      "EQUAL_EQUAL":"R 29",
-      "LESS_THAN":"R 29",
-      "GREATER_THAN":"R 29",
-      "LESS_OR_EQUAL_THAN":"R 29",
-      "GREATER_OR_EQUAL_THAN":"R 29",
-      "LEFT_PARENTHESIS":"R 29",
-      "RIGHT_PARENTHESIS":"R 29"
     }
   },
   "47":{
+    "ACTION":{
+      "RIGHT_PARENTHESIS":"R 14",
+      "SEMICOLON":"R 14",
+      "EQUAL":"R 14",
+      "PLUS":"S 35",
+      "SUBTRACT":"S 36",
+      "MULTIPLY":"S 37",
+      "DIVIDE":"S 38",
+      "EQUAL_EQUAL":"R 14",
+      "GREATER_THAN":"R 14"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"R 30",
-      "NUMBER":"R 30",
-      "PLUS":"R 30",
-      "MULTIPLY":"R 30",
-      "EQUAL_EQUAL":"R 30",
-      "LESS_THAN":"R 30",
-      "GREATER_THAN":"R 30",
-      "LESS_OR_EQUAL_THAN":"R 30",
-      "GREATER_OR_EQUAL_THAN":"R 30",
-      "LEFT_PARENTHESIS":"R 30",
-      "RIGHT_PARENTHESIS":"R 30"
     }
   },
   "48":{
+    "ACTION":{
+      "RIGHT_CURLY_BRACE":"R 3",
+      "PRINT":"S 14",
+      "VARIABLE":"S 17",
+      "IF":"S 15",
+      "WHILE":"S 16"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"R 31",
-      "NUMBER":"R 31",
-      "PLUS":"R 31",
-      "MULTIPLY":"R 31",
-      "EQUAL_EQUAL":"R 31",
-      "LESS_THAN":"R 31",
-      "GREATER_THAN":"R 31",
-      "LESS_OR_EQUAL_THAN":"R 31",
-      "GREATER_OR_EQUAL_THAN":"R 31",
-      "LEFT_PARENTHESIS":"R 31",
-      "RIGHT_PARENTHESIS":"R 31"
     }
   },
   "49":{
-    "GOTO":{
-      
-    },
     "ACTION":{
-      "VARIABLE":"R 32",
-      "NUMBER":"R 32",
-      "PLUS":"R 32",
-      "MULTIPLY":"R 32",
-      "EQUAL_EQUAL":"R 32",
-      "LESS_THAN":"R 32",
-      "GREATER_THAN":"R 32",
-      "LESS_OR_EQUAL_THAN":"R 32",
-      "GREATER_OR_EQUAL_THAN":"R 32",
-      "LEFT_PARENTHESIS":"R 32",
-      "RIGHT_PARENTHESIS":"R 32"
+      "RIGHT_PARENTHESIS":"R 19",
+      "EQUAL":"S 43",
+      "EQUAL_EQUAL":"S 44",
+      "GREATER_THAN":"S 45",
+      "SEMICOLON":"R 0 exp1-nt"
+    },
+    "GOTO":{
+      "exp1-nt":{
+        "SEMICOLON":53
+      } 
     }
   },
   "50":{
-    "GOTO":{
-      
-    },
     "ACTION":{
-      "EQUAL_EQUAL":"R 15",
-      "LESS_THAN":"R 15",
-      "GREATER_THAN":"R 15",
-      "LESS_OR_EQUAL_THAN":"R 15",
-      "GREATER_OR_EQUAL_THAN":"R 15",
-      "SEMICOLON":"R 15",
-      "RIGHT_PARENTHESIS":"R 15"
+      "VARIABLE":"S 17",
+      "NUMBER":"R 24"
+    },
+    "GOTO":{
+      "variable-nt": {
+        "EQUAL": 13,
+        "ANY": 13
+      },
+      "assign-nt": {
+        "SEMICOLON": 9,
+        "ANY": 9
+      },
+      "command-nt": {
+        "SEMICOLON": 8,
+        "ANY": 8
+      },
+      "command-list-nt": {
+        "RIGHT_CURLY_BRACE": 54,
+        "ANY": 54
+      }
     }
   },
   "51":{
-    "GOTO":{
-      "<EXP2>":"57",
-      "<EXP3>":"36"
-    },
     "ACTION":{
-      "VARIABLE":"S 37",
-      "NUMBER":"S 38",
-      "PLUS":"R 20",
-      "MULTIPLY":"S 35",
-      "EQUAL_EQUAL":"R 20",
-      "LESS_THAN":"R 20",
-      "GREATER_THAN":"R 20",
-      "LESS_OR_EQUAL_THAN":"R 20",
-      "GREATER_OR_EQUAL_THAN":"R 20",
-      "SEMICOLON":"R 20",
-      "LEFT_PARENTHESIS":"S 39",
-      "RIGHT_PARENTHESIS":"R 20"
+      "VARIABLE":"R 28",
+      "NUMBER":"R 28",
+      "RIGHT_PARENTHESIS":"R 0 exp-log2-nt"
+    },
+    "GOTO":{
+      "exp-log2-nt":{
+        "RIGHT_PARENTHESIS":55,
+        "ANY": 55
+      } 
     }
   },
   "52":{
+    "ACTION":{
+      "VARIABLE":"R 27",
+      "NUMBER":"R 27"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "EQUAL_EQUAL":"R 17",
-      "LESS_THAN":"R 17",
-      "GREATER_THAN":"R 17",
-      "LESS_OR_EQUAL_THAN":"R 17",
-      "GREATER_OR_EQUAL_THAN":"R 17",
-      "SEMICOLON":"R 17",
-      "RIGHT_PARENTHESIS":"R 17"
     }
   },
   "53":{
+    "ACTION":{
+      "RIGHT_CURLY_BRACE":"R 3",
+      "PRINT":"S 14",
+      "VARIABLE":"S 17",
+      "IF":"S 15",
+      "WHILE":"S 16",
+      "SEMICOLON":"R 3 exp1-nt"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"R 18",
-      "NUMBER":"R 18",
-      "PLUS":"R 18",
-      "MULTIPLY":"R 18",
-      "EQUAL_EQUAL":"R 18",
-      "LESS_THAN":"R 18",
-      "GREATER_THAN":"R 18",
-      "LESS_OR_EQUAL_THAN":"R 18",
-      "GREATER_OR_EQUAL_THAN":"R 18",
-      "SEMICOLON":"R 18",
-      "LEFT_PARENTHESIS":"R 18",
-      "RIGHT_PARENTHESIS":"R 18"
     }
   },
   "54":{
+    "ACTION":{
+      "RIGHT_PARENTHESIS":"R 13",
+      "RIGHT_CURLY_BRACE": "S 57",
+      "SEMICOLON":"R 13",
+      "EQUAL":"R 13",
+      "EQUAL_EQUAL":"R 13",
+      "GREATER_THAN":"R 13"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "RIGHT_PARENTHESIS":"S 58"
     }
   },
   "55":{
-    "GOTO":{
-      "<COMMAND_LIST>":"59",
-      "<VAR>":"19",
-      "<TYPE>":"7",
-      "<COMMAND>":"17",
-      "<PRINT>":"18",
-      "<ASSIGN>":"21",
-      "<IF>":"20"
-    },
     "ACTION":{
-      "IF":"S 23",
-      "PRINT":"S 22",
-      "INTEGER":"S 10",
-      "STRING":"S 8",
-      "CHAR":"S 9",
-      "VARIABLE":"S 24",
-      "RIGHT_CURLY_BRACE":"R 8"
+      "RIGHT_CURLY_BRACE":"S 58",
+      "RIGHT_PARENTHESIS":"R 3 exp-log2-nt"
+    },
+    "GOTO":{
+      
     }
   },
   "56":{
-    "GOTO":{
-      "<EXP_LOG_2>":"60",
-      "<LOGICAL_OP>":"44"
-    },
     "ACTION":{
-      "EQUAL_EQUAL":"S 45",
-      "LESS_THAN":"S 46",
-      "GREATER_THAN":"S 47",
-      "LESS_OR_EQUAL_THAN":"S 48",
-      "GREATER_OR_EQUAL_THAN":"S 49",
-      "RIGHT_PARENTHESIS":"R 27"
+      "RIGHT_PARENTHESIS":"R 18"
+    },
+    "GOTO":{
+      
     }
   },
   "57":{
+    "ACTION":{
+      "RIGHT_CURLY_BRACE":"S 59",
+      "SEMICOLON": "R 7 if-nt"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "EQUAL_EQUAL":"R 16",
-      "LESS_THAN":"R 16",
-      "GREATER_THAN":"R 16",
-      "LESS_OR_EQUAL_THAN":"R 16",
-      "GREATER_OR_EQUAL_THAN":"R 16",
-      "SEMICOLON":"R 16",
-      "RIGHT_PARENTHESIS":"R 16"
     }
   },
   "58":{
+    "ACTION":{
+      "SEMICOLON":"R 10"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "VARIABLE":"R 23",
-      "NUMBER":"R 23",
-      "PLUS":"R 23",
-      "MULTIPLY":"R 23",
-      "EQUAL_EQUAL":"R 23",
-      "LESS_THAN":"R 23",
-      "GREATER_THAN":"R 23",
-      "LESS_OR_EQUAL_THAN":"R 23",
-      "GREATER_OR_EQUAL_THAN":"R 23",
-      "SEMICOLON":"R 23",
-      "LEFT_PARENTHESIS":"R 23",
-      "RIGHT_PARENTHESIS":"R 23"
     }
   },
   "59":{
+    "ACTION":{
+      "SEMICOLON":"R 11"
+    },
     "GOTO":{
       
-    },
-    "ACTION":{
-      "RIGHT_CURLY_BRACE":"S 61"
-    }
-  },
-  "60":{
-    "GOTO":{
-      
-    },
-    "ACTION":{
-      "RIGHT_PARENTHESIS":"R 26"
-    }
-  },
-  "61":{
-    "GOTO":{
-      
-    },
-    "ACTION":{
-      "SEMICOLON":"R 24"
     }
   }
 }
