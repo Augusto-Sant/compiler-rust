@@ -3,7 +3,10 @@
 {% for token in tokens %}
 <div id="result">
     <h5><strong>Token</strong></h5>
-    <p><strong>Value: </strong> {{ token.value }}</p>
-    <p><strong>Lexeme: </strong><code>{{ token.lexeme }}</code></p>
+    <p><strong>Value: {{ token.value }}</strong></p>
+    <p><strong>Lexeme: <code>{{ token.lexeme }}</code></strong></p>
+    <p><strong>Line: <code>{{ token.line }}</code></strong></p>
+    <p><strong>Start Index: <code>{{ token.initial_position }}</code></strong></p>
+    <p><strong>Final Index: <code>{{ token.final_position }}</code></strong></p>
 </div>
 {% endfor %}

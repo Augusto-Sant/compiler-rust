@@ -1,0 +1,30 @@
+<div class="tab-list" role="tablist">
+	<div hx-get="/tab1" class="border-bottom" role="tab" aria-selected="false" aria-controls="tab-content">Analisador Léxico</div>
+	<div hx-get="/tab2" class="border-bottom" role="tab"   aria-selected="false" aria-controls="tab-content">Analisador Sintático</div>
+	<div hx-get="/tab3" class="selected"  role="tab" aria-selected="false" aria-controls="tab-content">Compilador</div>
+</div>
+<br>
+<br>
+<div id="tab-content" role="tabpanel" class="tab-content">
+    <div id="result">
+        {% if is_syntax_correct %}
+            <p style="color: green;">OK syntax is correct.</p>
+            {% if semantic_error %}
+                <p style="color: red;">{{ semantic_error }}</p>
+            {% else %}
+                <p style="color: green;">Semantic is correct.</p>
+            {% endif %}
+        {% else %}
+            <p style="color: red;">Error in syntax.</p>
+        {% endif %}
+    </div>
+    <br>
+    <form id="myForm" hx-post="/compile" hx-ext="json-enc">
+        <select style="display: none;" name="mode" id="mode">
+            <option value="html">Ver Formatado</option>
+        </select>
+        <textarea name="code_text" id="code_text" rows="5" cols="40" maxlength="2500" >{{code_text}}</textarea>
+        <button type="submit">Enviar</button>
+    </form>
+    <div style="visibility: hidden;" id="result" hx-target="#result" hx-swap="outerHTML"></div>
+</div>

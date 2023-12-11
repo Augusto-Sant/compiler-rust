@@ -1,3 +1,7 @@
+# Teste
+
+fn main ( ) { x = 10 ; y = 3 ; if ( x < = 10 ) { y = 3 ; } ; }
+
 # Gramatica exemplo
 
 "" = vazio

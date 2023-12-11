@@ -190,6 +190,14 @@
       },
       "variable-nt": {
         "ANY": 13
+      },
+      "if-nt":{
+        "SEMICOLON": 11,
+        "ANY": 11
+      },
+      "while-nt":{
+        "SEMICOLON": 11,
+        "ANY": 11
       }
     }
   },

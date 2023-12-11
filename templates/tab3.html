@@ -1,12 +1,12 @@
 <div class="tab-list" role="tablist">
 	<div hx-get="/tab1" class="border-bottom" role="tab" aria-selected="false" aria-controls="tab-content">Analisador Léxico</div>
-	<div hx-get="/tab2" role="tab" class="selected"  aria-selected="false" aria-controls="tab-content">Analisador Sintático</div>
-	<div hx-get="/tab3" class="border-bottom" role="tab" aria-selected="false" aria-controls="tab-content">Compilador</div>
+	<div hx-get="/tab2" class="border-bottom" role="tab"   aria-selected="false" aria-controls="tab-content">Analisador Sintático</div>
+	<div hx-get="/tab3" class="selected"  role="tab" aria-selected="false" aria-controls="tab-content">Compilador</div>
 </div>
 <br>
 <br>
 <div id="tab-content" role="tabpanel" class="tab-content">
-    <form id="myForm" hx-post="/syntax" hx-ext="json-enc">
+    <form id="myForm" hx-post="/compile" hx-ext="json-enc">
         <select style="display: none;" name="mode" id="mode">
             <option value="html">Ver Formatado</option>
         </select>

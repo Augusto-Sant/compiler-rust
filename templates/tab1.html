@@ -1,7 +1,7 @@
 <div class="tab-list" role="tablist">
 	<div hx-get="/tab1" class="selected" role="tab" aria-selected="false" aria-controls="tab-content">Analisador Léxico</div>
 	<div hx-get="/tab2" class="border-bottom" role="tab" aria-selected="false" aria-controls="tab-content">Analisador Sintático</div>
-	<div hx-get="/tab3" class="border-bottom" role="tab" aria-selected="false" aria-controls="tab-content">Tab 3</div>
+	<div hx-get="/tab3" class="border-bottom" role="tab" aria-selected="false" aria-controls="tab-content">Compilador</div>
 </div>
 <br>
 <br>
@@ -11,7 +11,7 @@
             <option value="html">Ver Formatado</option>
             <option value="json">Ver Json</option>
         </select>
-        <textarea name="code_text" id="code_text" rows="5" cols="40" maxlength="2500" >fn () {
+        <textarea name="code_text" id="code_text" rows="5" cols="40" maxlength="2500" >fn main() {
    if (x<=10){
       x = 10+32;
    };
