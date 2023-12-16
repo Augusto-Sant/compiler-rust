@@ -32,7 +32,7 @@ impl Token {
  Lexer processes and returns Tokens of a given text
 */
 pub fn tokenize_code(code_text: String) -> Vec<Token> {
-    let pattern = r"(?P<FN_PROGRAM>\bfn\b)|(?P<MAIN_PROGRAM>\bmain\b)|(?P<LESS_THAN_OR_EQUAL><=)|(?P<GREATER_THAN_OR_EQUAL>>=)|(?P<LEFT_PARENTHESIS>\()|(?P<RIGHT_PARENTHESIS>\))|(?P<PLUS>\+)|(?P<LEFT_SQUARE_BRACKET>\[)|(?P<RIGHT_SQUARE_BRACKET>\])|(?P<LEFT_CURLY_BRACE>\{)|(?P<RIGHT_CURLY_BRACE>\})|(?P<MULTIPLY>\*)|(?P<DIVIDE>\/)|(?P<SUBTRACT>\-)|(?P<MODULUS>%)|(?P<EXPONENT>\^)|(?P<GREATER_THAN>>)|(?P<LESS_THAN><)|(?P<EQUAL>=)|(?P<SEMICOLON>;)|(?P<IF>\bif\b)|(?P<FOR>\bfor\b)|(?P<WHILE>\bwhile\b)|(?P<PRINT>\bprint\b)|(?P<VARIABLE>[a-zA-Z_]\w*)|(?P<NUMBER>\d+)";
+    let pattern = r#"(?P<FN_PROGRAM>\bfn\b)|(?P<MAIN_PROGRAM>\bmain\b)|(?P<INTEGER_TYPE>\binteger\b)|(?P<STRING_TYPE>\bstring\b)|(?P<LESS_THAN_OR_EQUAL><=)|(?P<GREATER_THAN_OR_EQUAL>>=)|(?P<LEFT_PARENTHESIS>\()|(?P<RIGHT_PARENTHESIS>\))|(?P<PLUS>\+)|(?P<LEFT_SQUARE_BRACKET>\[)|(?P<RIGHT_SQUARE_BRACKET>\])|(?P<LEFT_CURLY_BRACE>\{)|(?P<RIGHT_CURLY_BRACE>\})|(?P<STRING>\".*?\")|(?P<MULTIPLY>\*)|(?P<DIVIDE>\/)|(?P<SUBTRACT>\-)|(?P<MODULUS>%)|(?P<EXPONENT>\^)|(?P<GREATER_THAN>>)|(?P<LESS_THAN><)|(?P<EQUAL>=)|(?P<SEMICOLON>;)|(?P<COLON>:)|(?P<IF>\bif\b)|(?P<FOR>\bfor\b)|(?P<WHILE>\bwhile\b)|(?P<PRINT>\bprint\b)|(?P<VARIABLE>[a-zA-Z_]\w*)|(?P<NUMBER>\d+)|"#;
     let re = Regex::new(pattern).unwrap();
 
     let mut tokens = Vec::new();

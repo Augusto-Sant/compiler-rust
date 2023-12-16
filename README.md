@@ -2,6 +2,12 @@
 
 fn main ( ) { x = 10 ; y = 3 ; if ( x < = 10 ) { y = 3 ; } ; }
 
+fn main ( ) { x : integer ; x = 10 ; }
+
+x : integer ; x = 10 ;
+
+x : 
+
 # Gramatica exemplo
 
 "" = vazio
@@ -23,7 +29,7 @@ exp-nt -> exp2-nt exp1-nt
 exp1-nt -> operator-nt exp2-nt exp1-nt
 exp1-nt -> '' 
 exp2-nt -> variable-nt 
-exp2-nt -> number 
+exp2-nt -> number
 exp-log-nt -> exp-nt exp-log2-nt
 exp-log2-nt -> logical-op-nt exp-nt exp-log2-nt 
 exp-log2-nt -> '' 
@@ -35,8 +41,13 @@ logical-op-nt -> ==
 logical-op-nt -> > 
 logical-op-nt -> < 
 logical-op-nt -> <= 
-logical-op-nt -> >= 
+logical-op-nt -> >=
 variable-nt -> variable
+command-nt -> declare-nt
+declare-nt -> variable-nt : type-nt
+type-nt -> integer-type
+type-nt -> string-type
+exp2-nt -> string
 
 
 ### Lista

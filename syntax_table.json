@@ -64,6 +64,9 @@
       "assign-nt": {
         "SEMICOLON": 9
       },
+      "declare-nt": {
+        "SEMICOLON": 9
+      },
       "print-nt": 10,
       "if-nt": {"ANY":11},
       "while-nt": {
@@ -124,7 +127,8 @@
   },
   "13":{
     "ACTION":{
-      "EQUAL": "S 20"
+      "EQUAL": "S 20",
+      "COLON": "S 60"
     },
     "GOTO":{
       
@@ -191,6 +195,9 @@
       "variable-nt": {
         "ANY": 13
       },
+      "declare-nt": {
+        "ANY": 9
+      },
       "if-nt":{
         "SEMICOLON": 11,
         "ANY": 11
@@ -204,7 +211,8 @@
   "20":{
     "ACTION":{
       "VARIABLE":"S 17",
-      "NUMBER":"S 28"
+      "NUMBER":"S 28",
+      "STRING":"S 28"
     },
     "GOTO":{
       "exp2-nt": {
@@ -604,6 +612,10 @@
         "SEMICOLON": 9,
         "ANY": 9
       },
+      "declare-nt": {
+        "SEMICOLON": 9,
+        "ANY": 9
+      },
       "command-nt": {
         "SEMICOLON": 8,
         "ANY": 8
@@ -715,6 +727,25 @@
   "59":{
     "ACTION":{
       "SEMICOLON":"R 11"
+    },
+    "GOTO":{
+      
+    }
+  },
+  "60":{
+    "ACTION":{
+      "INTEGER_TYPE":"S 61",
+      "STRING_TYPE":"S 61"
+    },
+    "GOTO":{
+      
+    }
+  },
+  "61":{
+    "ACTION":{
+      "INTEGER_TYPE":"R 1 type-nt",
+      "STRING_TYPE":"R 1 type-nt",
+      "SEMICOLON": "R 3 declare-nt"
     },
     "GOTO":{
       
