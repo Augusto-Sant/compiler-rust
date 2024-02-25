@@ -1,72 +1,21 @@
-# Teste
+# SLR Compiler with Axum and Tera
 
-fn main ( ) { x = 10 ; y = 3 ; if ( x < = 10 ) { y = 3 ; } ; }
+## About
+this repository hosts an SLR (Simple LR parser) compiler project made for me to learn the basics of it in university,
+utilizing Axum for the web framework and Tera as the templating language.
+the compiler focuses on lexical token analysis and syntax checking for a simplified programming language.
 
-fn main ( ) { x : integer ; x = 10 ; }
+## Features
+- **Lexical Analysis:** Tokenizes the input code, identifying keywords, operators, literals, and identifiers.
+- **Syntax Checking:** Utilizes SLR parsing techniques to validate the structure of the code against grammar rules.
 
-x : integer ; x = 10 ;
+## Example Syntax
+The compiler supports basic conditional and assignment operations:
 
-x : 
-
-# Gramatica exemplo
-
-"" = vazio
--nt = non-terminal
-
-program' -> program-nt
-program-nt -> fn main ( ) { command-list-nt }
-command-list-nt -> command-nt ; command-list-nt
-command-list-nt -> ''
-command-nt -> assign-nt
-command-nt -> print-nt
-command-nt -> if-nt
-command-nt -> while-nt
-assign-nt -> variable-nt = exp-nt
-print-nt -> print ( variable ) 
-if-nt -> if ( exp-log-nt ) { command-list-nt }
-while-nt -> while ( exp-log-nt ) { command-list-nt }
-exp-nt -> exp2-nt exp1-nt
-exp1-nt -> operator-nt exp2-nt exp1-nt
-exp1-nt -> '' 
-exp2-nt -> variable-nt 
-exp2-nt -> number
-exp-log-nt -> exp-nt exp-log2-nt
-exp-log2-nt -> logical-op-nt exp-nt exp-log2-nt 
-exp-log2-nt -> '' 
-operator-nt -> +
-operator-nt -> -
-operator-nt -> *
-operator-nt -> /
-logical-op-nt -> ==
-logical-op-nt -> > 
-logical-op-nt -> < 
-logical-op-nt -> <= 
-logical-op-nt -> >=
-variable-nt -> variable
-command-nt -> declare-nt
-declare-nt -> variable-nt : type-nt
-type-nt -> integer-type
-type-nt -> string-type
-exp2-nt -> string
-
-
-### Lista
-
-0	<PROGRAMA>	<LISTA_COMANDOS>
-1	<LISTA_COMANDOS>	<COMANDO><LISTA_COMANDOS>
-2	<COMANDO>	"IF|WHILE|FOR|FOREACH|SWITCH|
-DO|PRINT|ASSIGN
-3	<IF>	if (<EXP>){<LISTA_COMANDOS>}
-4	<WHILE>	while(<EXP>){<LISTA_COMANDOS>}
-5	<FOR>	for (<ATRIBUICAO> pv <EXP> pv id <INCREMENTO>) {<LISTACOMANDOS>}
-6	<FOREACH>	foreach (ATR doispontos id) {<LISTACOMANDOS>}
-7	<SWITCH>	switch(EXP) {<CASE> <DEFAULT>}
-8	<DO>	do{<LISTA_COMANDOS>} while(EXP)
-9	<PRINT>	print(<str>)
-10	<CONDICAO>	<EXP> <COMPARA> <EXP>
-11	<EXP>	<EXP> <OPERA> <EXP> | <EXP2>
-12	<EXP2>	const | id
-13	<OPERA>	SOMA|SUBTRACAO|MULTIPLICACAO| ...
-14	<BLOCO>	{<LISTA_COMANDOS>}
-15	<CONDICAOBLOCO>	(CONDICAO)<BLOCO>
-16  <ASSIGN> -> variable = exp
+```
+fn main() {
+   if (x <= 10) {
+      x = 10 + 32;
+   };
+}
+```
